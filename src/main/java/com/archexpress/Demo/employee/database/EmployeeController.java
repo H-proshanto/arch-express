@@ -26,7 +26,7 @@ public class EmployeeController {
 
     @PostMapping
     public String Create(@RequestBody Employee employee) {
-        messageSender.sendMessage(employee);
+        messageSender.sendMessage(employee, "def-exchange");
         return "Created..";
     }
 
@@ -38,7 +38,7 @@ public class EmployeeController {
             }
     )
     public Employee Update(@RequestBody Employee employee) {
-        messageSender.sendMessage(employee);
+        messageSender.sendMessage(employee, "def-exchange");
         return employeeRepository.save(employee);
     }
 

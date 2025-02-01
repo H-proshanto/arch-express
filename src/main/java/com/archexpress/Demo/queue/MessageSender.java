@@ -1,6 +1,6 @@
 package com.archexpress.Demo.queue;
 
-import com.archexpress.Demo.employee.database.Employee;
+import com.archexpress.Demo.exceptions.MessageSendingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -13,14 +13,14 @@ public class MessageSender {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void sendMessage(Employee employee) {
+    public <M extends Publishable> void sendMessage(M messageObject, String queueName) {
         ObjectMapper objectMapper = new ObjectMapper();
         String message = null;
         try {
-            message = objectMapper.writeValueAsString(employee);
+            message = objectMapper.writeValueAsString(messageObject);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new MessageSendingException("Failed to convert message object to JSON", e);
         }
-        rabbitTemplate.convertAndSend("def-exchange", "def-routing-key", message);
+        rabbitTemplate.convertAndSend(queueName, "def-routing-key", message);
     }
 }

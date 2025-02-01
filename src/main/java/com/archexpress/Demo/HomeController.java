@@ -22,6 +22,6 @@ public class HomeController {
         Employee employee = new Employee();
         employee.setEmail("test@gmail.com");
         employee.setName("test");
-        messageSender.sendMessage(employee);
+        messageSender.sendMessage(employee, "def-exchange");
     }
 }
