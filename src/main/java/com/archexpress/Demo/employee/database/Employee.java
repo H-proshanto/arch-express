@@ -1,5 +1,6 @@
 package com.archexpress.Demo.employee.database;
 
+import com.archexpress.Demo.queue.Publishable;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -8,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 
 @Document(collection = "employees")
-public class Employee implements Serializable {
+public class Employee implements Publishable {
 
     @Id
     private ObjectId id;
