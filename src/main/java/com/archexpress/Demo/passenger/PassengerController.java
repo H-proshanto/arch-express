@@ -29,7 +29,7 @@ public class PassengerController {
                     @CacheEvict(value = "passenger", key = "'all'")
             }
     )
-    public String Create(@RequestBody Passenger passenger) {
+    public String Create(@RequestBody AddPassengerCommand passenger) {
         queuePublisher.publish(passenger, "passenger_registration_exchange");
 //        passengerRepository.save(passenger);
 //        messageSender.sendMessage(passenger);
