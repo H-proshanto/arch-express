@@ -30,8 +30,10 @@ public class PassengerController {
                     @CacheEvict(value = "passenger", key = "'all'")
             }
     )
-    public String Create(@RequestBody AddPassengerCommand addPassengerCommand) {
-        serviceBus.publish(addPassengerCommand, "passenger_registration_exchange");
+    public String Create(@RequestBody Passenger passenger) {
+        AddPassengerCommand addPassengerCommand = new AddPassengerCommand();
+        addPassengerCommand.setPassenger(passenger);
+        serviceBus.publishToQueue(addPassengerCommand, "passenger_registration_queue");
         return "Created..";
     }
 

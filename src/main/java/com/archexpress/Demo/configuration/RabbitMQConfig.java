@@ -11,50 +11,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Bean
-    public Queue defQueue() {
-        return new Queue("def-queue", false);
-    }
 
     @Bean
-    public TopicExchange defExchange() {
-        return new TopicExchange("def-exchange");
+    public FanoutExchange passengerAggregateExchange() {
+        return new FanoutExchange("passenger_registration_exchange");
     }
-
-    @Bean
-    public Binding defBinding(Queue defQueue, TopicExchange defExchange) {
-        return BindingBuilder.bind(defQueue).to(defExchange).with("def-routing-key");
-    }
-
-//    @Bean
-//    public Queue passengerAgregateQueue() {
-//        return new Queue("passenger_registration_queue", false);
-//    }
-
-    @Bean
-    public TopicExchange passengerAggregateExchange() {
-        return new TopicExchange("passenger_aggregate_exchange");
-    }
-
-//    @Bean
-//    public Binding passengerAgregateBinding(Queue passengerAgregateQueue, TopicExchange passengerAggregateExchange) {
-//        return BindingBuilder.bind(passengerAgregateQueue).to(passengerAggregateExchange).with("passenger_aggregate_exchange");
-//    }
 
 
     @Bean
     public Queue passengerQueue() {
         return new Queue("passenger_registration_queue", false);
-    }
-
-    @Bean
-    public TopicExchange passengerExchange() {
-        return new TopicExchange("passenger_registration_exchange");
-    }
-
-    @Bean
-    public Binding passengerBinding(Queue passengerQueue, TopicExchange passengerExchange) {
-        return BindingBuilder.bind(passengerQueue).to(passengerExchange).with("passenger_registration_exchange");
     }
 
     @Bean

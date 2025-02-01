@@ -32,4 +32,15 @@ public class ServiceBus {
             publish(event, exchangeName);
         }
     }
+
+    public <M extends Publishable> void publishToQueue(M messageObject, String queueName) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String message = null;
+        try {
+            message = objectMapper.writeValueAsString(messageObject);
+        } catch (JsonProcessingException e) {
+            throw new MessageSendingException("Failed to convert message object to JSON", e);
+        }
+        rabbitTemplate.convertAndSend(queueName, message);
+    }
 }

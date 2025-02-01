@@ -28,6 +28,6 @@ public class AddPassengerCommandHandler implements CommandHandler<AddPassengerCo
 
 
 //        save passengerAggregateRoot --> repo
-        serviceBus.broadcast(events, "passenger_aggregate_exchange");
+        serviceBus.broadcast(events, "passenger_registration_exchange");
     }
 }

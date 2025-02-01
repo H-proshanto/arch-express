@@ -9,4 +9,8 @@ public class AddPassengerCommand implements Command, Publishable {
     public Passenger getPassenger() {
         return passenger;
     }
+
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
+    }
 }

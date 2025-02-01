@@ -9,10 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 import java.util.List;
 
-@Document(collection = "passengers")
 public class Passenger implements Publishable {
-    @Id
-    private ObjectId id;
+    private String id;
     private String firstName;
     private String lastName;
     private String email;
@@ -29,11 +27,11 @@ public class Passenger implements Publishable {
     private Long updatedAt;
     private Long deletedAt;
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -157,8 +155,8 @@ public class Passenger implements Publishable {
         this.deletedAt = deletedAt;
     }
 
-    @JsonGetter("id")
-    public String getIdAsString() {
-        return id != null ? id.toHexString() : null;
-    }
+//    @JsonGetter("id")
+//    public String getIdAsString() {
+//        return id != null ? id.toHexString() : null;
+//    }
 }
