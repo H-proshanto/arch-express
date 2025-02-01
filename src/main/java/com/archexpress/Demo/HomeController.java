@@ -1,7 +1,7 @@
 package com.archexpress.Demo;
 
 import com.archexpress.Demo.employee.database.Employee;
-import com.archexpress.Demo.queue.MessageSender;
+import com.archexpress.Demo.queue.QueuePublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
     @Autowired
-    MessageSender messageSender;
+    QueuePublisher messageSender;
 
     @GetMapping("/health")
     public String health(){
@@ -22,6 +22,6 @@ public class HomeController {
         Employee employee = new Employee();
         employee.setEmail("test@gmail.com");
         employee.setName("test");
-        messageSender.sendMessage(employee, "def-exchange");
+        messageSender.publish(employee, "def-exchange");
     }
 }

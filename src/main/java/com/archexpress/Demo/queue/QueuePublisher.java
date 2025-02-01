@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MessageSender {
+public class QueuePublisher {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public <M extends Publishable> void sendMessage(M messageObject, String queueName) {
+    public <M extends Publishable> void publish(M messageObject, String queueName) {
         ObjectMapper objectMapper = new ObjectMapper();
         String message = null;
         try {

@@ -1,6 +1,6 @@
 package com.archexpress.Demo.employee.database;
 
-import com.archexpress.Demo.queue.MessageSender;
+import com.archexpress.Demo.queue.QueuePublisher;
 import org.bson.types.ObjectId;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -10,23 +10,22 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
 
     private final EmployeeRepository employeeRepository;
-    private final MessageSender messageSender;
+    private final QueuePublisher messageSender;
 
-    public EmployeeController(EmployeeRepository employeeRepository, MessageSender messageSender) {
+    public EmployeeController(EmployeeRepository employeeRepository, QueuePublisher messageSender) {
         this.employeeRepository = employeeRepository;
         this.messageSender = messageSender;
     }
 
     @PostMapping
     public String Create(@RequestBody Employee employee) {
-        messageSender.sendMessage(employee, "def-exchange");
+        messageSender.publish(employee, "def-exchange");
         return "Created..";
     }
 
@@ -38,7 +37,7 @@ public class EmployeeController {
             }
     )
     public Employee Update(@RequestBody Employee employee) {
-        messageSender.sendMessage(employee, "def-exchange");
+        messageSender.publish(employee, "def-exchange");
         return employeeRepository.save(employee);
     }
 
