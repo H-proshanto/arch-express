@@ -1,7 +1,7 @@
 package com.archexpress.Demo.driver;
 
 import com.archexpress.Demo.driver.database.Driver;
-import com.archexpress.Demo.queue.QueuePublisher;
+import com.archexpress.Demo.queue.ServiceBus;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.web.bind.annotation.*;
@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/drivers")
 public class DriverController {
     private final DriverRepository driverRepository;
-    private final QueuePublisher queuePublisher;
+    private final ServiceBus serviceBus;
 
-    public DriverController(DriverRepository driverRepository, QueuePublisher queuePublisher) {
+    public DriverController(DriverRepository driverRepository, ServiceBus serviceBus) {
         this.driverRepository = driverRepository;
-        this.queuePublisher = queuePublisher;
+        this.serviceBus = serviceBus;
     }
 
     @PostMapping
     @Caching(evict = {@CacheEvict(value = "driver", key = "'all'")})
     public String Create(@RequestBody Driver driver) {
-        queuePublisher.publish(driver, "driver_registration_exchange");
+        serviceBus.publish(driver, "driver_registration_exchange");
         return "Driver event published";
     }
 

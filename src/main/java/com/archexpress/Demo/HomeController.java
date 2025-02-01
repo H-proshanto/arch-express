@@ -1,7 +1,7 @@
 package com.archexpress.Demo;
 
 import com.archexpress.Demo.employee.database.Employee;
-import com.archexpress.Demo.queue.QueuePublisher;
+import com.archexpress.Demo.queue.ServiceBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
     @Autowired
-    QueuePublisher messageSender;
+    ServiceBus messageSender;
 
     @GetMapping("/health")
     public String health(){

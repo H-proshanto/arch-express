@@ -26,9 +26,25 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(defQueue).to(defExchange).with("def-routing-key");
     }
 
+//    @Bean
+//    public Queue passengerAgregateQueue() {
+//        return new Queue("passenger_registration_queue", false);
+//    }
+
+    @Bean
+    public TopicExchange passengerAggregateExchange() {
+        return new TopicExchange("passenger_aggregate_exchange");
+    }
+
+//    @Bean
+//    public Binding passengerAgregateBinding(Queue passengerAgregateQueue, TopicExchange passengerAggregateExchange) {
+//        return BindingBuilder.bind(passengerAgregateQueue).to(passengerAggregateExchange).with("passenger_aggregate_exchange");
+//    }
+
+
     @Bean
     public Queue passengerQueue() {
-        return new Queue("passenger_registration_exchange", false);
+        return new Queue("passenger_registration_queue", false);
     }
 
     @Bean

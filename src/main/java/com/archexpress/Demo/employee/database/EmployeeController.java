@@ -1,6 +1,6 @@
 package com.archexpress.Demo.employee.database;
 
-import com.archexpress.Demo.queue.QueuePublisher;
+import com.archexpress.Demo.queue.ServiceBus;
 import org.bson.types.ObjectId;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,9 +16,9 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeRepository employeeRepository;
-    private final QueuePublisher messageSender;
+    private final ServiceBus messageSender;
 
-    public EmployeeController(EmployeeRepository employeeRepository, QueuePublisher messageSender) {
+    public EmployeeController(EmployeeRepository employeeRepository, ServiceBus messageSender) {
         this.employeeRepository = employeeRepository;
         this.messageSender = messageSender;
     }

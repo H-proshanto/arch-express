@@ -1,7 +1,8 @@
 package com.archexpress.Demo.passenger;
 
 import com.archexpress.Demo.passenger.database.Passenger;
-import com.archexpress.Demo.queue.QueuePublisher;
+import com.archexpress.Demo.queue.ServiceBus;
+import com.archexpress.Demo.queue.comnnads.AddPassengerCommand;
 import org.bson.types.ObjectId;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,11 +17,11 @@ import java.util.List;
 @RequestMapping("/api/passenger")
 public class PassengerController {
     private final PassengerRepository passengerRepository;
-    private final QueuePublisher queuePublisher;
+    private final ServiceBus serviceBus;
 
-    public PassengerController(PassengerRepository passengerRepository, QueuePublisher queuePublisher) {
+    public PassengerController(PassengerRepository passengerRepository, ServiceBus serviceBus) {
         this.passengerRepository = passengerRepository;
-        this.queuePublisher = queuePublisher;
+        this.serviceBus = serviceBus;
     }
 
     @PostMapping
@@ -29,10 +30,8 @@ public class PassengerController {
                     @CacheEvict(value = "passenger", key = "'all'")
             }
     )
-    public String Create(@RequestBody AddPassengerCommand passenger) {
-        queuePublisher.publish(passenger, "passenger_registration_exchange");
-//        passengerRepository.save(passenger);
-//        messageSender.sendMessage(passenger);
+    public String Create(@RequestBody AddPassengerCommand addPassengerCommand) {
+        serviceBus.publish(addPassengerCommand, "passenger_registration_exchange");
         return "Created..";
     }
 
