@@ -12,18 +12,33 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     @Bean
-    public Queue queue() {
+    public Queue defQueue() {
         return new Queue("def-queue", false);
     }
 
     @Bean
-    public TopicExchange exchange() {
+    public TopicExchange defExchange() {
         return new TopicExchange("def-exchange");
     }
 
     @Bean
-    public Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("def-routing-key");
+    public Binding defBinding(Queue defQueue, TopicExchange defExchange) {
+        return BindingBuilder.bind(defQueue).to(defExchange).with("def-routing-key");
+    }
+
+    @Bean
+    public Queue passengerQueue() {
+        return new Queue("passenger_registration_exchange", false);
+    }
+
+    @Bean
+    public TopicExchange passengerExchange() {
+        return new TopicExchange("passenger_registration_exchange");
+    }
+
+    @Bean
+    public Binding passengerBinding(Queue passengerQueue, TopicExchange passengerExchange) {
+        return BindingBuilder.bind(passengerQueue).to(passengerExchange).with("passenger_registration_exchange");
     }
 
     @Bean

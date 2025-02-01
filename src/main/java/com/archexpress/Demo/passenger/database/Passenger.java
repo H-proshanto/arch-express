@@ -1,5 +1,6 @@
 package com.archexpress.Demo.passenger.database;
 
+import com.archexpress.Demo.queue.Publishable;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -9,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Document(collection = "passengers")
-public class Passenger implements Serializable {
+public class Passenger implements Publishable {
     @Id
     private ObjectId id;
     private String firstName;

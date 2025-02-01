@@ -13,18 +13,18 @@ public class MessageListener {
 
     private static final Logger log = LoggerFactory.getLogger(MessageListener.class);
 
-    @RabbitListener(queues = "def-queue")
-    public void receiveMessage(String message) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Employee employee;
-        try {
-            employee = objectMapper.readValue(message, Employee.class);
-            log.info("Employee received: {}", employee);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
-        System.out.println("Received Employee: " + employee);
-    }
+//    @RabbitListener(queues = "def-queue")
+//    public void receiveMessage(String message) {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        Employee employee;
+//        try {
+//            employee = objectMapper.readValue(message, Employee.class);
+//            log.info("Employee received: {}", employee);
+//        } catch (JsonProcessingException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        System.out.println("Received Employee: " + employee);
+//    }
 }
 

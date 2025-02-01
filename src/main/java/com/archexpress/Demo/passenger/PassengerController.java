@@ -1,6 +1,7 @@
 package com.archexpress.Demo.passenger;
 
 import com.archexpress.Demo.passenger.database.Passenger;
+import com.archexpress.Demo.queue.QueuePublisher;
 import org.bson.types.ObjectId;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,9 +16,11 @@ import java.util.List;
 @RequestMapping("/api/passenger")
 public class PassengerController {
     private final PassengerRepository passengerRepository;
+    private final QueuePublisher queuePublisher;
 
-    public PassengerController(PassengerRepository passengerRepository) {
+    public PassengerController(PassengerRepository passengerRepository, QueuePublisher queuePublisher) {
         this.passengerRepository = passengerRepository;
+        this.queuePublisher = queuePublisher;
     }
 
     @PostMapping
@@ -27,7 +30,8 @@ public class PassengerController {
             }
     )
     public String Create(@RequestBody Passenger passenger) {
-        passengerRepository.save(passenger);
+        queuePublisher.publish(passenger, "passenger_registration_exchange");
+//        passengerRepository.save(passenger);
 //        messageSender.sendMessage(passenger);
         return "Created..";
     }

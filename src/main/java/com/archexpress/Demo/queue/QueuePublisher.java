@@ -21,6 +21,6 @@ public class QueuePublisher {
         } catch (JsonProcessingException e) {
             throw new MessageSendingException("Failed to convert message object to JSON", e);
         }
-        rabbitTemplate.convertAndSend(queueName, "def-routing-key", message);
+        rabbitTemplate.convertAndSend(queueName, queueName, message);
     }
 }
