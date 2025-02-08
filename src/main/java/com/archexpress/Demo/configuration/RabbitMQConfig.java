@@ -17,10 +17,19 @@ public class RabbitMQConfig {
         return new FanoutExchange("passenger_registration_exchange");
     }
 
+    @Bean
+    public FanoutExchange driverAggregateExchange() {
+        return new FanoutExchange("driver_registration_exchange");
+    }
+
 
     @Bean
     public Queue passengerQueue() {
         return new Queue("passenger_registration_queue", false);
+    }    @Bean
+
+    public Queue driverQueue() {
+        return new Queue("driver_registration_queue", false);
     }
 
     @Bean

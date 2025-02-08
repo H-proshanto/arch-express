@@ -37,29 +37,53 @@ public class PassengerController {
         return "Created..";
     }
 
-    @PutMapping
-    @Caching(
-            evict = {
-                    @CacheEvict(value = "passenger", key = "'all'"),
-                    @CacheEvict(value = "passenger", key = "#passenger.id")
-            }
-    )
-    public String Update(@RequestBody Passenger passenger) {
-//        messageSender.sendMessage(employee);
-        passengerRepository.save(passenger);
-        return "Updated...";
-    }
-
-    @GetMapping("/find-all")
-    @Cacheable(value = "passenger", key = "'all'")
-    public List<Passenger> getAll() {
-        return passengerRepository.findAll();
-    }
-
-    @GetMapping("/{id}")
-    @Cacheable(value = "passenger", key = "#id")
-    public Passenger getById(@PathVariable ObjectId id) {
-        return passengerRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Passenger not found"));
-    }
+//    @PutMapping
+//    @Caching(
+//            evict = {
+//                    @CacheEvict(value = "passenger", key = "'all'"),
+//                    @CacheEvict(value = "passenger", key = "#passenger.id")
+//            }
+//    )
+//    public String Update(@RequestBody Passenger passenger) {
+////        messageSender.sendMessage(employee);
+//        passengerRepository.save(passenger);
+//        return "Updated...";
+//    }
+//
+//    @GetMapping("/find-all")
+//    @Cacheable(value = "passenger", key = "'all'")
+//    public List<Passenger> getAll() {
+//        return passengerRepository.findAll();
+//    }
+//
+//    @GetMapping("/{id}")
+//    @Cacheable(value = "passenger", key = "#id")
+//    public Passenger getById(@PathVariable ObjectId id) {
+//        return passengerRepository.findById(id)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Passenger not found"));
+//    }    @PutMapping
+//    @Caching(
+//            evict = {
+//                    @CacheEvict(value = "passenger", key = "'all'"),
+//                    @CacheEvict(value = "passenger", key = "#passenger.id")
+//            }
+//    )
+//    public String Update(@RequestBody Passenger passenger) {
+////        messageSender.sendMessage(employee);
+//        passengerRepository.save(passenger);
+//        return "Updated...";
+//    }
+//
+//    @GetMapping("/find-all")
+//    @Cacheable(value = "passenger", key = "'all'")
+//    public List<Passenger> getAll() {
+//        return passengerRepository.findAll();
+//    }
+//
+//    @GetMapping("/{id}")
+//    @Cacheable(value = "passenger", key = "#id")
+//    public Passenger getById(@PathVariable ObjectId id) {
+//        return passengerRepository.findById(id)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Passenger not found"));
+//    }
 }

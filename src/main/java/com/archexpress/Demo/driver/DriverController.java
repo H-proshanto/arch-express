@@ -2,6 +2,8 @@ package com.archexpress.Demo.driver;
 
 import com.archexpress.Demo.driver.database.Driver;
 import com.archexpress.Demo.queue.ServiceBus;
+import com.archexpress.Demo.queue.comnnads.AddDriverCommand;
+import com.archexpress.Demo.queue.comnnads.AddPassengerCommand;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +23,10 @@ public class DriverController {
     @PostMapping
     @Caching(evict = {@CacheEvict(value = "driver", key = "'all'")})
     public String Create(@RequestBody Driver driver) {
-        serviceBus.publish(driver, "driver_registration_exchange");
-        return "Driver event published";
+        AddDriverCommand addDriverCommand = new AddDriverCommand();
+        addDriverCommand.setDriver(driver);
+        serviceBus.publishToQueue(addDriverCommand, "driver_registration_queue");
+        return "Created..";
     }
 
 //    @PutMapping

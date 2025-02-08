@@ -1,6 +1,8 @@
 package com.archexpress.Demo.queue;
 
+import com.archexpress.Demo.queue.comnnads.AddDriverCommand;
 import com.archexpress.Demo.queue.comnnads.AddPassengerCommand;
+import com.archexpress.Demo.queue.handlers.AddDriverCommandHandler;
 import com.archexpress.Demo.queue.handlers.AddPassengerCommandHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,9 @@ public class CommandDispatcher {
 
     @Autowired
     private AddPassengerCommandHandler addPassengerCommandHandler;
+
+    @Autowired
+    private AddDriverCommandHandler addDriverCommandHandler;
 
 
 
@@ -34,5 +39,9 @@ public class CommandDispatcher {
 
     public void dispatch(AddPassengerCommand command) {
         addPassengerCommandHandler.handle(command);
+    }
+
+    public void dispatch(AddDriverCommand command) {
+        addDriverCommandHandler.handle(command);
     }
 }

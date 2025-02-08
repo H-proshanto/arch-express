@@ -1,6 +1,7 @@
 package com.archexpress.Demo.queue;
 
 
+import com.archexpress.Demo.queue.comnnads.AddDriverCommand;
 import com.archexpress.Demo.queue.comnnads.AddPassengerCommand;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +25,19 @@ public class MessageListener {
         AddPassengerCommand command;
         try {
             command = objectMapper.readValue(message, AddPassengerCommand.class);
+            commandDispatcher.dispatch(command);
+            log.info("Command received and dispatched: {}", command);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @RabbitListener(queues = "driver_registration_queue")
+    public void receiveDriverMessage(String message) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        AddDriverCommand command;
+        try {
+            command = objectMapper.readValue(message, AddDriverCommand.class);
             commandDispatcher.dispatch(command);
             log.info("Command received and dispatched: {}", command);
         } catch (JsonProcessingException e) {
